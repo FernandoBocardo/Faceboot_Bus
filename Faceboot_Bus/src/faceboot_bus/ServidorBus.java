@@ -61,8 +61,9 @@ public class ServidorBus
             ServerSocket socketServidor = new ServerSocket(1234);
             while (true)
             {
-                Socket clienteSocket = socketServidor.accept();
-                HiloDeUsuario hiloUsuario = new HiloDeUsuario(clienteSocket);
+                Socket socketCliente = socketServidor.accept();
+                Socket socketNotificacion = socketServidor.accept();
+                HiloDeUsuario hiloUsuario = new HiloDeUsuario(socketCliente, socketNotificacion);
                 usuariosConectados.add(hiloUsuario);
                 poolHilos.agregar(hiloUsuario);
             }

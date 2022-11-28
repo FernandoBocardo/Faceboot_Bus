@@ -4,13 +4,14 @@
  */
 package faceboot_bus;
 
-import faceboot_bus.Cola;
+import listeners.iEventListener;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  *
@@ -26,7 +27,7 @@ public class EventManager {
             this.listeners.put(operation, new ArrayList<>());
         }
     }
-
+    
     public void subscribe(String eventType, iEventListener listener) {
         List<iEventListener> users = listeners.get(eventType);
         users.add(listener);
@@ -37,18 +38,19 @@ public class EventManager {
         users.remove(listener);
     }
 
-    public void notify(Cola cola) {
+    public void notify(Queue<Nodo> cola) {
         this.activo = true;
-        while(cola.getPrimero() != null)
+        while(cola.peek()!= null)
         {
-            String eventType = cola.getPrimero().getEventType();
-            String json = cola.getPrimero().getJson();
-            Socket socket = cola.getPrimero().getSocket();
+            Nodo nodo = cola.remove();
+            String eventType = nodo.getEventType();
+            String json = nodo.getJson();
+            Socket socketCliente = nodo.getSocketCliente();
+            Socket socketNotificacion = nodo.getSocketNotificacion();
             List<iEventListener> users = listeners.get(eventType);
             for (iEventListener listener : users) {
-                listener.update(json, socket);
+                listener.update(json, socketCliente, socketNotificacion);
             }
-            cola.eliminarPrimero();
         }
         this.activo = false;
     }

@@ -4,6 +4,11 @@
  */
 package faceboot_bus;
 
+import listeners.RegistrarPublicacionListener;
+import listeners.NotificarRegistroPublicacionListener;
+import listeners.NotificarRegistroUsuarioListener;
+import listeners.RegistrarUsuarioListener;
+
 /**
  *
  * @author Fernando
@@ -16,11 +21,10 @@ public class iniciarServidor {
     public static void main(String[] args)
     {
         Bus bus = Bus.getInstance();
-        bus.events.subscribe("registrarUsuario", new RegistrarUsuariosListener());
-        bus.events.subscribe("iniciarSesion", new RegistrarUsuariosListener());
-        bus.events.subscribe("notificarRegistroUsuario", new NotificacionRegistrarUsuarioListener());
-        bus.events.subscribe("NotificacionPublicacionRegistrada", new NotificacionRegistrarPublicacionListener()); 
-        bus.events.subscribe("registrarPublicacion", new RegistrarPublicacionesListener());
+        bus.events.subscribe("registrarUsuario", new RegistrarUsuarioListener());
+        bus.events.subscribe("notificarRegistroUsuario", new NotificarRegistroUsuarioListener());
+        bus.events.subscribe("notificarRegistroPublicacion", new NotificarRegistroPublicacionListener()); 
+        bus.events.subscribe("registrarPublicacion", new RegistrarPublicacionListener());
         PoolHilos poolHilos = new PoolHilos();
         new ServidorBus(bus, poolHilos);
     }

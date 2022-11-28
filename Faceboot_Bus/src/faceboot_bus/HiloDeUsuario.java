@@ -23,23 +23,21 @@ import java.util.List;
 public class HiloDeUsuario implements Runnable
 {
 
+    private Socket socketNotificacion;
     private Socket socketCliente;
     private BufferedReader entrada;
-    public BufferedWriter salida;
-    
-//    private IEventBus eventbus;
 
     /**
      * Crea una instancia de esta clase y se suscribe a cambios en la publicaciones.
      * @param nodo
      */
-    public HiloDeUsuario(Socket socketCliente)
+    public HiloDeUsuario(Socket socketCliente, Socket socketNotificacion)
     {
         this.socketCliente = socketCliente;
+        this.socketNotificacion = socketNotificacion;
         try
         {
-            entrada = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
-            salida = new BufferedWriter(new OutputStreamWriter(socketCliente.getOutputStream()));
+            entrada = new BufferedReader(new InputStreamReader(this.socketCliente.getInputStream()));
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -47,7 +45,7 @@ public class HiloDeUsuario implements Runnable
     }
 
     /**
-     * Atiende el socket.
+     * Atiende el socketNotificacion.
      */
     public void run()
     {
@@ -61,7 +59,7 @@ public class HiloDeUsuario implements Runnable
                     String json = entrada.readLine();
                     System.out.println(eventType);
                     System.out.println(json);
-                    Nodo nodo = new Nodo(eventType, json, socketCliente);
+                    Nodo nodo = new Nodo(eventType, json, socketCliente, socketNotificacion);
                     Bus.getInstance().añadirEvento(nodo);
                 }
             }
@@ -77,6 +75,11 @@ public class HiloDeUsuario implements Runnable
         return socketCliente;
     }
 
+    public Socket getSocketNotificacion() {
+        return socketNotificacion;
+    }
+
+    
     
     
 }

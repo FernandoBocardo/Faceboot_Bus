@@ -5,6 +5,8 @@
 package faceboot_bus;
 
 import java.net.ServerSocket;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  *
@@ -14,12 +16,12 @@ public class Bus {
     
     private static volatile Bus instance;
     public EventManager events;
-    public Cola cola;
+    Queue<Nodo> cola;
     
     private Bus()
     {
-        this.events = new EventManager("registrarUsuario", "iniciarSesion", "notificarRegistroUsuario", "NotificacionPublicacionRegistrada", "registrarPublicacion");
-        this.cola = new Cola();
+        this.events = new EventManager("registrarUsuario", "iniciarSesion", "notificarRegistroUsuario", "notificarRegistroPublicacion", "registrarPublicacion");
+        this.cola = new LinkedList<>();
     }
     
     public static Bus getInstance() 
@@ -40,7 +42,7 @@ public class Bus {
     
     public void añadirEvento(Nodo nodo)
     {
-        this.cola.añadir(nodo);
+        this.cola.add(nodo);
         if(!events.activo)
         {
             events.notify(this.cola);

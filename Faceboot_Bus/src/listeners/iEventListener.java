@@ -1,4 +1,4 @@
-package faceboot_bus;
+package listeners;
 
 import java.net.Socket;
 
@@ -13,6 +13,6 @@ import java.net.Socket;
  */
 public interface iEventListener {
     
-    void update(String json, Socket socket);
+    void update(String json, Socket socketCliente, Socket socketNotificacion);
     
 }

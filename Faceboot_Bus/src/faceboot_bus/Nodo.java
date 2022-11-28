@@ -13,43 +13,24 @@ import java.net.Socket;
  */
 public class Nodo {
     
-    private Nodo anterior;
-    private Nodo siguiente;
     private String eventType;
     private String json;
-    private Socket socket;
+    private Socket socketCliente;
+    private Socket socketNotificacion;
 
-    public Nodo(String eventType, String json, Socket socket)
+    public Nodo(String eventType, String json, Socket socketCliente, Socket socketNotificacion)
     {
-        this.anterior = null;
-        this.siguiente = null;
         this.eventType = eventType;
         this.json = json;
-        this.socket = socket;
+        this.socketCliente = socketCliente;
+        this.socketNotificacion = socketNotificacion;
     }
     
     public Nodo(String eventType)
     {
-        this.anterior = null;
-        this.siguiente = null;
         this.eventType = eventType;
     }
     
-    public Nodo getAnterior() {
-        return anterior;
-    }
-
-    public void setAnterior(Nodo anterior) {
-        this.anterior = anterior;
-    }
-
-    public Nodo getSiguiente() {
-        return siguiente;
-    }
-
-    public void setSiguiente(Nodo siguiente) {
-        this.siguiente = siguiente;
-    }
 
     public String getEventType() {
         return eventType;
@@ -67,16 +48,19 @@ public class Nodo {
         this.json = json;
     }
 
-    public Socket getSocket() {
-        return socket;
+    public Socket getSocketCliente() {
+        return socketCliente;
     }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
+    public void setSocketCliente(Socket socketCliente) {
+        this.socketCliente = socketCliente;
     }
 
+    public Socket getSocketNotificacion() {
+        return socketNotificacion;
+    }
 
-    
-    
-    
+    public void setSocketNotificacion(Socket socketNotificacion) {
+        this.socketNotificacion = socketNotificacion;
+    }
 }
