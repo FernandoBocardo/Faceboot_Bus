@@ -29,31 +29,6 @@ public class ServidorBus
      * @param bus
      * @param poolHilos
      */
-//    public ServidorBus(Bus bus, PoolHilos poolHilos)
-//    {
-//        try
-//        {
-//            ServerSocket socketServidor = new ServerSocket(1234);
-//            while (true)
-//            {
-//                Socket evento = socketServidor.accept();
-//                Socket json = socketServidor.accept();
-//                DataInputStream dataInputEvento = new DataInputStream(evento.getInputStream());
-//                String tipoEvento = dataInputEvento.readUTF();
-//                DataInputStream dataInputJson = new DataInputStream(json.getInputStream());
-//                String jsonString = dataInputJson.readUTF();
-//                Nodo nodo = new Nodo(tipoEvento, jsonString, evento);
-//                HiloDeUsuario hilo = new HiloDeUsuario(nodo, bus, usuariosConectados);
-//                usuariosConectados.add(hilo);
-//                new Thread(hilo).start();
-//                bus.añadirEvento(nodo); 
-//            }
-//        } catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-    
     public ServidorBus(Bus bus, PoolHilos poolHilos)
     {
         try
