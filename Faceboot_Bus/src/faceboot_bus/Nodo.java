@@ -17,13 +17,15 @@ public class Nodo {
     private String json;
     private Socket socketCliente;
     private Socket socketNotificacion;
+    private String usuarioJson;
 
-    public Nodo(String eventType, String json, Socket socketCliente, Socket socketNotificacion)
+    public Nodo(String eventType, String json, Socket socketCliente, Socket socketNotificacion, String usuarioJson)
     {
         this.eventType = eventType;
         this.json = json;
         this.socketCliente = socketCliente;
         this.socketNotificacion = socketNotificacion;
+        this.usuarioJson = usuarioJson;
     }
     
     public Nodo(String eventType)
@@ -63,4 +65,13 @@ public class Nodo {
     public void setSocketNotificacion(Socket socketNotificacion) {
         this.socketNotificacion = socketNotificacion;
     }
+
+    public String getUsuarioJson() {
+        return usuarioJson;
+    }
+
+    public void setUsuarioJson(String usuarioJson) {
+        this.usuarioJson = usuarioJson;
+    }
+
 }

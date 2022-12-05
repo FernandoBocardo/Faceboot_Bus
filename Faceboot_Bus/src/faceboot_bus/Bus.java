@@ -20,7 +20,7 @@ public class Bus {
     
     private Bus()
     {
-        this.events = new EventManager("registrarUsuario", "iniciarSesion", "notificarRegistroUsuario", "notificarRegistroPublicacion", "registrarPublicacion");
+        this.events = new EventManager("notificarConsultaMenciones", "consultarMenciones", "notificarEdicionPerfil", "editarUsuario", "consultarPublicacionesPorEtiqueta", "registrarComentario","notificarRegistroComentario","consultarComentarios","eliminarPublicacion", "notificarSesionNoIniciada", "notificarConsultaPublicaciones", "consultarPublicaciones", "notificarSesionIniciada", "registrarUsuario", "iniciarSesion", "notificarRegistroUsuario", "notificarRegistroPublicacion", "registrarPublicacion");
         this.cola = new LinkedList<>();
     }
     

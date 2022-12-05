@@ -6,6 +6,7 @@ package faceboot_bus;
  */
 
 
+import Dominio.Usuario;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -26,6 +27,7 @@ public class HiloDeUsuario implements Runnable
     private Socket socketNotificacion;
     private Socket socketCliente;
     private BufferedReader entrada;
+    private String usuarioJson;
 
     /**
      * Crea una instancia de esta clase y se suscribe a cambios en la publicaciones.
@@ -35,6 +37,7 @@ public class HiloDeUsuario implements Runnable
     {
         this.socketCliente = socketCliente;
         this.socketNotificacion = socketNotificacion;
+        this.usuarioJson = "";
         try
         {
             entrada = new BufferedReader(new InputStreamReader(this.socketCliente.getInputStream()));
@@ -57,9 +60,13 @@ public class HiloDeUsuario implements Runnable
                 {
                     String eventType = entrada.readLine();
                     String json = entrada.readLine();
+                    if(!eventType.equals("registrarUsuario"))
+                    {
+                        usuarioJson = entrada.readLine();
+                    }
                     System.out.println(eventType);
                     System.out.println(json);
-                    Nodo nodo = new Nodo(eventType, json, socketCliente, socketNotificacion);
+                    Nodo nodo = new Nodo(eventType, json, socketCliente, socketNotificacion, usuarioJson);
                     Bus.getInstance().añadirEvento(nodo);
                 }
             }
@@ -78,6 +85,16 @@ public class HiloDeUsuario implements Runnable
     public Socket getSocketNotificacion() {
         return socketNotificacion;
     }
+
+    public String getUsuarioJson() {
+        return usuarioJson;
+    }
+
+    public void setUsuarioJson(String usuarioJson) {
+        this.usuarioJson = usuarioJson;
+    }
+    
+    
 
     
     

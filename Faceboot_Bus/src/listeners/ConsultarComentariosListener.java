@@ -4,34 +4,37 @@
  */
 package listeners;
 
+import Negocios.CtrlComentario;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
+import java.lang.System.Logger;
 import java.net.Socket;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Fernando
  */
-public class NotificarRegistroUsuarioListener implements iEventListener{
-
+public class ConsultarComentariosListener implements iEventListener{
+    
     @Override
     public void update(String json, Socket socketCliente, Socket socketNotificacion, String usuarioJson) {
-        try {
+        String comentariosJson = CtrlComentario.getInstance().consultarPorPublicacion(json);
+        try 
+        {
             BufferedWriter salida = new BufferedWriter(new OutputStreamWriter(socketNotificacion.getOutputStream()));
-            salida.write("notificarRegistroUsuario");
+            salida.write("notificarConsultaComentarios");
             salida.newLine();
-            salida.write(json);
+            salida.write(comentariosJson);
+            salida.newLine();
+            salida.write(usuarioJson);
             salida.newLine();
             salida.flush();
-        } catch (IOException ex) {
-            Logger.getLogger(NotificarRegistroUsuarioListener.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IOException ex) 
+        {
+            java.util.logging.Logger.getLogger(ConsultarComentariosListener.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
     
 }

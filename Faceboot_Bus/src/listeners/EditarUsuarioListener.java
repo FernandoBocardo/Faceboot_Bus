@@ -9,18 +9,16 @@ import faceboot_bus.Bus;
 import faceboot_bus.Nodo;
 import java.net.Socket;
 
-
-
 /**
  *
  * @author Fernando
  */
-public class RegistrarUsuarioListener implements iEventListener{
+public class EditarUsuarioListener implements iEventListener{
     
     @Override
     public void update(String json, Socket socketCliente, Socket socketNotificacion, String usuarioJson) {
-        CtrlUsuario.getInstance().registrarUsuario(json);
-        Bus.getInstance().añadirEvento(new Nodo("notificarRegistroUsuario", json, socketCliente, socketNotificacion, usuarioJson));
+        CtrlUsuario.getInstance().editarUsuario(json);
+        Bus.getInstance().añadirEvento(new Nodo("notificarEdicionPerfil", json, socketCliente, socketNotificacion, usuarioJson));
     }
     
 }

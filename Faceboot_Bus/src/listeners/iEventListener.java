@@ -13,6 +13,6 @@ import java.net.Socket;
  */
 public interface iEventListener {
     
-    void update(String json, Socket socketCliente, Socket socketNotificacion);
+    void update(String json, Socket socketCliente, Socket socketNotificacion, String usuarioJson);
     
 }

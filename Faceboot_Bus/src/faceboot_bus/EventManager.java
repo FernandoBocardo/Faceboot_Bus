@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -47,9 +48,10 @@ public class EventManager {
             String json = nodo.getJson();
             Socket socketCliente = nodo.getSocketCliente();
             Socket socketNotificacion = nodo.getSocketNotificacion();
-            List<iEventListener> users = listeners.get(eventType);
+            String usuarioJson = nodo.getUsuarioJson();
+            List<iEventListener> users = new CopyOnWriteArrayList(listeners.get(eventType));
             for (iEventListener listener : users) {
-                listener.update(json, socketCliente, socketNotificacion);
+                listener.update(json, socketCliente, socketNotificacion, usuarioJson);
             }
         }
         this.activo = false;
